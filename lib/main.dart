@@ -4,6 +4,7 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 void main() async {
   print('Program Starts');
+  await Future.delayed(const Duration(seconds: 1));
   WidgetsFlutterBinding.ensureInitialized();
   print('WidgetsFlutterBinding initialized');
 
@@ -52,8 +53,7 @@ void main() async {
     ),
   );
 
-  print('>>>>>>>>>>>>>>>>>>>>');
-  print('Fetching Foo');
+  print('Fetching Foo, Map body without headers works');
 
   try {
     Response response = await dio.get(
@@ -66,9 +66,7 @@ void main() async {
 
   print('Fetching Foo finished');
 
-
-  print('>>>>>>>>>>>>>>>>>>>>');
-  print('Fetching Jane');
+  print('\nFetching Jane, String body with headers works');
 
   try {
     Response response = await dio.get(
@@ -81,16 +79,17 @@ void main() async {
 
   print('Fetching Jane finished');
 
-  print('>>>>>>>>>>>>>>>>>>>>');
-  print('Fetching John');
+  print('\nFetching John, Map body with headers DOES NOT work');
 
   try {
     Response response = await dio.get(
       'https://example.com/user/john',
     );
     print(response.data);
-  } catch (e) {
+  } catch (e, st) {
     print('ERROR HAPPENS HERE');
+    print(e);
+    print(st);
   }
 
   print('Fetching John finished');
